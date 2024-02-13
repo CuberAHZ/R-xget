@@ -1,18 +1,31 @@
-from sys import exit, argv
+import sys
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from decimal import Decimal
 
-# 判断是否为中文
+
 def is_chinese(string):
+    """
+    用于判断字符串是否包含中文，如果是则返回True，反之返回False
+    :param string: 需要进行判断的字符串
+    :return: True|False
+    """
     for ch in string:
         if u'\u4e00' <= ch <= u'\u9fff':
             return True
     return False
 
-# 获取x的值
+
 def get(x_text, s, l, p):
+    """
+    解方程
+    :param x_text: 一元n次方程
+    :param s: 最小值
+    :param l: 最大值
+    :param p: 精度
+    :return: int|None
+    """
     x_ = False
     for i in range(int((l - s) / p)):
         x = s + i * p
@@ -27,8 +40,13 @@ def get(x_text, s, l, p):
     else:
         return None
 
-# 约分
+
 def ft(t):
+    """
+    约分分数
+    :param t: 分数
+    :return: str
+    """
     a, b = map(int, t.split("/"))
     x, y = a, b
     while b > 0:
@@ -37,8 +55,8 @@ def ft(t):
     y = int(y/a)
     return str(x)+'/'+str(y)
 
+
 class Ui_q_mw(object):
-    # 安装ui
     def setupUi(self, q_mw):
         if not q_mw.objectName():
             q_mw.setObjectName(u"q_mw")
@@ -185,7 +203,6 @@ class Ui_q_mw(object):
 
         QMetaObject.connectSlotsByName(q_mw)
 
-    # 设置ui
     def retranslateUi(self, q_mw):
         q_mw.setWindowTitle(QCoreApplication.translate("q_mw", u"R-xget v0.0.17", None))
         self.title.setText(QCoreApplication.translate("q_mw", u"R-xget", None))
@@ -204,8 +221,8 @@ class Ui_q_mw(object):
         self.label_2.setText(QCoreApplication.translate("q_mw", u"准备中...", None))
         self.label_3.setText(QCoreApplication.translate("q_mw", u"\u7ed3\u679c\uff1a", None))
 
+
 class Rxget(QMainWindow, Ui_q_mw):
-    # 构造函数
     def __init__(self):
         super().__init__()
         self.text_1 = ""
@@ -215,7 +232,6 @@ class Rxget(QMainWindow, Ui_q_mw):
         self.pushButton.clicked.connect(self.xget)
         self.textEdit.textChanged.connect(self.t)
 
-    # 输入提示
     def t(self):
         if not self.textEdit.toPlainText():
             self.label_2.setText("准备中...")
@@ -253,7 +269,6 @@ class Rxget(QMainWindow, Ui_q_mw):
             else:
                 self.label_2.setText("输入中...")
 
-    # 获取x
     def xget(self):
         if not self.textEdit.toPlainText():
             self.label_2.setText("寻找失败")
@@ -294,13 +309,12 @@ class Rxget(QMainWindow, Ui_q_mw):
                 self.label_2.setText("寻找失败")
                 QMessageBox.warning(self, "Error", "请检查你的输入精度和方程")
 
-    # 按键事件
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Return:
             self.xget()
 
-# 运行
+
 if __name__ == "__main__":
-    app = QApplication(argv)
+    app = QApplication(sys.argv)
     window = Rxget()
     exit(app.exec_())
