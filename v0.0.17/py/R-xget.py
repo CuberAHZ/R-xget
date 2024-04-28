@@ -7,7 +7,7 @@ from decimal import Decimal
 
 def is_chinese(string):
     """
-    用于判断字符串是否包含中文，如果是则返回True，反之返回False
+    用于判断字符串是否包含中文,如果是则返回True,反之返回False
     :param string: 需要进行判断的字符串
     :return: True|False
     """
