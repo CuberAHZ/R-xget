@@ -52,6 +52,7 @@ p = "\033[1;35;1m"
 c = "\033[1;36;1m"
 gr = "\033[1;37;1m"
 w = "\033[1;39;1m"
+m = "\033[38m"
 
 def gett():
     global exit_, small, large, precision, r, g, y, b, p, c, gr, w, count
